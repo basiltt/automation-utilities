@@ -1579,6 +1579,93 @@ class WebActions:
         )
         return None
 
+    def get_child_elements(
+            self,
+            element: str | WebElement,
+            max_wait_time: int = DEFAULT_WAIT_TIME,
+            *,
+            name: str | None = None,
+            is_clickable: bool = False,
+    ) -> list[WebElement]:
+        """
+        Return every *direct* child of *element* as a list of WebElements.
+
+        Parameters
+        ----------
+        element        ID / XPath string **or** an already-resolved WebElement
+        max_wait_time  Wait for the parent element to appear before giving up
+        name           Friendly name for cleaner log messages
+        is_clickable   Pass True if the parent must be clickable before we continue
+        """
+        log = name or element
+        self.logger.debug(f'Fetching direct children of "{log}"')
+
+        # Get the parent element (either we already have it or look it up)
+        parent = element if isinstance(element, WebElement) else \
+            self._get_element_if_exist(
+                element,
+                max_wait_time=max_wait_time,
+                is_clickable=is_clickable,
+                name=name,
+            )
+        if not parent:
+            self.logger.debug(f'Parent "{log}" not found → returning []')
+            return []
+
+        # "./*" = only first-level descendants
+        child_elements = parent.find_elements(By.XPATH, "./*")
+        self.logger.debug(f'Found {len(child_elements)} children under "{log}"')
+        return child_elements
+
+    def get_children_count(
+            self,
+            element,
+            max_wait_time: int = DEFAULT_WAIT_TIME,
+            *,
+            name: str | None = None,
+            is_clickable: bool = False,
+    ) -> int:
+        """
+        Return the number of **direct** children an element has.
+        """
+        el = self._get_element_if_exist(
+            element,
+            max_wait_time=max_wait_time,
+            is_clickable=is_clickable,
+            name=name,
+        )
+        if not el:
+            return 0
+        return len(el.find_elements(By.XPATH, "./*"))
+
+    def count_elements(
+            self,
+            locator: str,
+            max_wait_time: int = DEFAULT_WAIT_TIME,
+            *,
+            name: str | None = None,
+            is_clickable: bool = False,
+    ) -> int:
+        """
+        Return the number of elements that match *locator* (ID or XPath).
+        """
+        log = name or locator
+        self.logger.debug(f'Counting elements for "{log}"')
+
+        by = getattr(By, self._get_find_method(locator))
+        # Wait until at least one element (or timeout)
+        try:
+            WebDriverWait(self.driver, max_wait_time).until(
+                EC.presence_of_element_located((by, locator))
+            )
+        except TimeoutException:
+            self.logger.debug(f'No matches found for "{log}"')
+            return 0
+
+        total = len(self.driver.find_elements(by, locator))
+        self.logger.debug(f'Found {total} matches for "{log}"')
+        return total
+
     def accept_alert(self) -> None:
         """
         Method to accept an alert dialog in the current session.
