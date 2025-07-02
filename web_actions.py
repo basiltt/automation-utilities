@@ -15,7 +15,6 @@ from dataclasses import dataclass
 from typing import Union, Optional, List, Dict
 
 import loguru
-
 # from loguru import logger
 from selenium import webdriver
 from selenium.common.exceptions import (
@@ -51,7 +50,7 @@ SUCCESS_MESSAGE = {
     "switch_to_frame": "successfully switched to the frame element",
     "get_text": "successfully fetched the text from the element",
     "set_text_enter": "successfully set the text "
-    "and pressed enter on the element",
+                      "and pressed enter on the element",
 }
 
 
@@ -111,23 +110,23 @@ def _time_left(start: float, timeout: int | float) -> float:
 
 class WebActions:
     def __init__(
-        self,
-        *,
-        browser: str | Browser = Browser.CHROME,
-        chrome_path: str | None = None,
-        chrome_driver_path: str | None = None,
-        firefox_path: str | None = None,
-        firefox_driver_path: str | None = None,
-        edge_path: str | None = None,
-        edge_driver_path: str | None = None,
-        download_path: str | None = None,
-        proxy_address: str | None = None,
-        proxy_port: str | None = None,
-        arguments: list[str] | None = None,
-        experimental_options: dict | None = None,
-        start_maximized: bool = True,
-        driver=None,
-        **kwargs,
+            self,
+            *,
+            browser: str | Browser = Browser.CHROME,
+            chrome_path: str | None = None,
+            chrome_driver_path: str | None = None,
+            firefox_path: str | None = None,
+            firefox_driver_path: str | None = None,
+            edge_path: str | None = None,
+            edge_driver_path: str | None = None,
+            download_path: str | None = None,
+            proxy_address: str | None = None,
+            proxy_port: str | None = None,
+            arguments: list[str] | None = None,
+            experimental_options: dict | None = None,
+            start_maximized: bool = True,
+            driver=None,
+            **kwargs,
     ) -> None:
         """
         Create a WebActions instance.
@@ -218,13 +217,13 @@ class WebActions:
         return "ID"
 
     def _get_element_if_exist(
-        self,
-        element: str,
-        max_wait_time: int = DEFAULT_WAIT_TIME,
-        *,
-        log_exception: bool = False,
-        name: str | None = None,
-        is_clickable: bool = True,
+            self,
+            element: str,
+            max_wait_time: int = DEFAULT_WAIT_TIME,
+            *,
+            log_exception: bool = False,
+            name: str | None = None,
+            is_clickable: bool = True,
     ):
         """
         Try to locate the element exactly once within `max_wait_time`.
@@ -268,14 +267,14 @@ class WebActions:
     #  🔍  check_element_exist – never raises unless *caller* asks for it
     # ----------------------------------------------------------------------
     def check_element_exist(
-        self,
-        element,
-        max_wait_time: int = DEFAULT_WAIT_TIME,
-        *,
-        log_exception: bool = False,
-        name: str | None = None,
-        enable_logging: bool = True,
-        raise_exception: bool = False,  # ← caller-controlled
+            self,
+            element,
+            max_wait_time: int = DEFAULT_WAIT_TIME,
+            *,
+            log_exception: bool = False,
+            name: str | None = None,
+            enable_logging: bool = True,
+            raise_exception: bool = False,  # ← caller-controlled
     ):
         """
         Return the element (or None) without throwing,
@@ -350,9 +349,9 @@ class WebActions:
     #     return None
 
     def wait_until_element_disappears_by_css_selector(
-        self,
-        selector: str,
-        max_wait_time=DEFAULT_WAIT_TIME,
+            self,
+            selector: str,
+            max_wait_time=DEFAULT_WAIT_TIME,
     ) -> None:
         """
         Method to wait until the element with the given CSS
@@ -367,11 +366,11 @@ class WebActions:
         )
 
     def wait_until_element_disappears(
-        self,
-        element,
-        max_wait_time: int = DEFAULT_WAIT_TIME,
-        *,
-        name: str | None = None,
+            self,
+            element,
+            max_wait_time: int = DEFAULT_WAIT_TIME,
+            *,
+            name: str | None = None,
     ):
         log = name or element
         start = time.time()
@@ -389,12 +388,12 @@ class WebActions:
             self.logger.debug(f'"{log}" disappeared')
 
     def get_all_select_options(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        value_type=None,
-        name: Optional[str] = None,
-        is_clickable: bool = True,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            value_type=None,
+            name: Optional[str] = None,
+            is_clickable: bool = True,
     ) -> List[str]:
         """
         Get all the select options from the given element with optional parameters for max wait time, value type, and name.
@@ -445,11 +444,11 @@ class WebActions:
         return []
 
     def get_all_child_inner_text(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional[str] = None,
-        is_clickable: bool = True,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional[str] = None,
+            is_clickable: bool = True,
     ) -> List[str]:
         """
         Get all the inner text of the child elements of the specified element.
@@ -485,15 +484,15 @@ class WebActions:
         return []
 
     def _perform_selection_action(
-        self,
-        element,
-        action,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        index=None,
-        visible_text=None,
-        value=None,
-        is_clickable: bool = True,
-        name: Optional[str] = None,
+            self,
+            element,
+            action,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            index=None,
+            visible_text=None,
+            value=None,
+            is_clickable: bool = True,
+            name: Optional[str] = None,
     ) -> None:
         """
         Method to perform selection or deselection on WebElement
@@ -566,11 +565,11 @@ class WebActions:
                     raise SelectionNotFoundError(exception_message)
 
     def _perform_action(
-        self,
-        element,
-        action,
-        text=None,
-        max_wait_time=DEFAULT_WAIT_TIME,
+            self,
+            element,
+            action,
+            text=None,
+            max_wait_time=DEFAULT_WAIT_TIME,
     ) -> Union[str, None]:
         """
         Method to perform the action on a WebElement
@@ -613,12 +612,12 @@ class WebActions:
                 )
 
     def click(
-        self,
-        element,
-        max_wait_time: int = DEFAULT_WAIT_TIME,
-        *,
-        name: str | None = None,
-        enable_logging: bool = True,
+            self,
+            element,
+            max_wait_time: int = DEFAULT_WAIT_TIME,
+            *,
+            name: str | None = None,
+            enable_logging: bool = True,
     ):
         start = time.time()
         log = name or element
@@ -641,8 +640,8 @@ class WebActions:
                     self.logger.debug(f'Successfully clicked "{log}"')
                 return
             except (
-                ElementClickInterceptedException,
-                StaleElementReferenceException,
+                    ElementClickInterceptedException,
+                    StaleElementReferenceException,
             ):
                 # brief pause & retry until timeout burns out
                 time.sleep(0.25)
@@ -656,17 +655,17 @@ class WebActions:
             raise WebElementNotFoundError(f'Click on "{log}" timed out')
 
     def set_text(
-        self,
-        element,
-        text,
-        sensitive=False,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        validate=False,
-        max_validation_attempts=3,
-        validation_wait_time=2,
-        name: Optional[str] = None,
-        clear_text=True,
-        is_clickable: bool = False,
+            self,
+            element,
+            text,
+            sensitive=False,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            validate=False,
+            max_validation_attempts=3,
+            validation_wait_time=2,
+            name: Optional[str] = None,
+            clear_text=True,
+            is_clickable: bool = False,
     ) -> None:
         """
         A function to set text on a specified element with optional validation.
@@ -723,13 +722,13 @@ class WebActions:
         )
 
     def repeat_steps_until_success(
-        self,
-        steps: List[Dict],
-        max_wait_time=DEFAULT_WAIT_TIME,
-        no_of_attempts=3,
-        step_wait_time=2,
-        raise_exception=True,
-        return_data=False,
+            self,
+            steps: List[Dict],
+            max_wait_time=DEFAULT_WAIT_TIME,
+            no_of_attempts=3,
+            step_wait_time=2,
+            raise_exception=True,
+            return_data=False,
     ) -> Union[bool, Data]:
         """
         Repeat steps until success.
@@ -831,8 +830,8 @@ class WebActions:
             if break_flag:
                 break
             if any(
-                data in stop_text
-                for stop_text in steps[-1].get("stop_texts", [])
+                    data in stop_text
+                    for stop_text in steps[-1].get("stop_texts", [])
             ):
                 break_flag = True
                 break
@@ -861,12 +860,12 @@ class WebActions:
         return True
 
     def wait_until_element_text_changes(
-        self,
-        element,
-        text,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional[str] = None,
-        is_clickable: bool = False,
+            self,
+            element,
+            text,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional[str] = None,
+            is_clickable: bool = False,
     ) -> None:
         """
         Wait until the text on the specified element changes to the given text within a maximum wait time.
@@ -908,11 +907,11 @@ class WebActions:
         self.logger.debug(f'Text on element "{log_text}" changed')
 
     def threaded_wait_until_element_text_changes(
-        self,
-        element,
-        text,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional[str] = None,
+            self,
+            element,
+            text,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional[str] = None,
     ) -> None:
         """
         A function that waits until the text on a specified element changes to the given text.
@@ -938,12 +937,12 @@ class WebActions:
         thread.join()
 
     def wait_until_text_matches(
-        self,
-        element,
-        text,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional[str] = None,
-        is_clickable: bool = False,
+            self,
+            element,
+            text,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional[str] = None,
+            is_clickable: bool = False,
     ) -> bool:
         """
         A function that waits until the text on a specified element matches a given text.
@@ -975,16 +974,16 @@ class WebActions:
         return False
 
     def set_text_enter(
-        self,
-        element,
-        text,
-        sensitive=False,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        validate=False,
-        validation_element=None,
-        max_validation_attempts=3,
-        validation_wait_time=2,
-        name: Optional[str] = None,
+            self,
+            element,
+            text,
+            sensitive=False,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            validate=False,
+            validation_element=None,
+            max_validation_attempts=3,
+            validation_wait_time=2,
+            name: Optional[str] = None,
     ) -> None:
         """
         A function that sets text and presses enter on a specified element.
@@ -1023,8 +1022,8 @@ class WebActions:
                 # print("Got element")
                 self.element.clear()
                 if (
-                    self.element.get_attribute("value").lower().strip()
-                    != text.lower().strip()
+                        self.element.get_attribute("value").lower().strip()
+                        != text.lower().strip()
                 ):
                     attempts = 0
                     while attempts < max_validation_attempts:
@@ -1055,14 +1054,14 @@ class WebActions:
         )
 
     def validate_text(
-        self,
-        element,
-        text,
-        stop_texts: Optional[List[str]] = None,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        no_of_attempts=3,
-        validation_wait_time=2,
-        name: Optional[str] = None,
+            self,
+            element,
+            text,
+            stop_texts: Optional[List[str]] = None,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            no_of_attempts=3,
+            validation_wait_time=2,
+            name: Optional[str] = None,
     ) -> Data:
         """
         Validate the text on the given element multiple times with retries.
@@ -1112,10 +1111,10 @@ class WebActions:
         )
 
     def execute_script(
-        self,
-        script: str,
-        name: Optional[str] = None,
-        *args,
+            self,
+            script: str,
+            name: Optional[str] = None,
+            *args,
     ):
         """
         Execute a given script using the driver.
@@ -1131,11 +1130,11 @@ class WebActions:
         self.logger.debug(f'Successfully executed script "{log_text}"')
 
     def click_and_set_text(
-        self,
-        element,
-        text,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional[str] = None,
+            self,
+            element,
+            text,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional[str] = None,
     ):
         """
         Clicks on the element, sets the provided text, and logs the action.
@@ -1162,11 +1161,11 @@ class WebActions:
         )
 
     def get_drop_down_exact_value_by_value(
-        self,
-        element,
-        value,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional[str] = None,
+            self,
+            element,
+            value,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional[str] = None,
     ):
         """
         A function to get the exact text value from a dropdown element based on the provided value.
@@ -1222,10 +1221,10 @@ class WebActions:
         self.logger.debug(f"Successfully performed action chain: {actions}")
 
     def clear_text(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional = None,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional = None,
     ) -> None:
         """
         Clear the text from an element, optionally waiting up to a specified time.
@@ -1245,9 +1244,9 @@ class WebActions:
             )
 
     def switch_to_frame(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
     ) -> None:
         """
         Method to switch control to a frame
@@ -1263,10 +1262,10 @@ class WebActions:
         )
 
     def get_text(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional[str] = None,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional[str] = None,
     ) -> str:
         """
         A method to get text from a given element with an optional name, using a specified maximum wait time.
@@ -1292,10 +1291,10 @@ class WebActions:
         return fetched_text
 
     def get_element(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        is_clickable: bool = True,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            is_clickable: bool = True,
     ) -> Union[WebElement, None]:
         """
         A function that retrieves an element based on specified parameters and returns it.
@@ -1314,12 +1313,12 @@ class WebActions:
         return self.element if self.element else None
 
     def select_element(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional[str] = None,
-        is_clickable: bool = True,
-        **kwargs,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional[str] = None,
+            is_clickable: bool = True,
+            **kwargs,
     ) -> None:
         """
         A method to select an element with various options like index, visible text, or value.
@@ -1362,10 +1361,10 @@ class WebActions:
         self.logger.debug(f'Successfully selected element "{log_text}"')
 
     def deselect_element(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        **kwargs,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            **kwargs,
     ) -> None:
         """
         Method to do the deselection on supported WebElement
@@ -1403,11 +1402,11 @@ class WebActions:
         )
 
     def is_enabled(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        is_clickable: bool = True,
-        name: Optional[str] = None,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            is_clickable: bool = True,
+            name: Optional[str] = None,
     ) -> bool:
         """
         Check if the element is enabled within a specified wait time.
@@ -1434,11 +1433,11 @@ class WebActions:
         return False
 
     def is_selected(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        is_clickable: bool = True,
-        name: Optional[str] = None,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            is_clickable: bool = True,
+            name: Optional[str] = None,
     ) -> bool:
         """
         A description of the entire function, its parameters, and its return types.
@@ -1479,10 +1478,10 @@ class WebActions:
         self.logger.debug(f'Successfully navigated to "{log_text}"')
 
     def wait_for_element_to_be_visible(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional[str] = None,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional[str] = None,
     ) -> bool:
         """
         A function that waits for an element to be visible on the webpage.
@@ -1515,10 +1514,10 @@ class WebActions:
         return False
 
     def get_inner_html(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional[str] = None,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional[str] = None,
     ) -> str:
         """
         A function to get the inner HTML of a given element.
@@ -1549,10 +1548,10 @@ class WebActions:
         return None
 
     def get_parent_element(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional[str] = None,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional[str] = None,
     ) -> WebElement:
         """
         A function to retrieve the parent element of a given element with an optional maximum wait time.
@@ -1638,6 +1637,66 @@ class WebActions:
             return 0
         return len(el.find_elements(By.XPATH, "./*"))
 
+    def get_all_elements(
+            self,
+            locator: str,
+            max_wait_time: int = DEFAULT_WAIT_TIME,
+            *,
+            name: str | None = None,
+            is_clickable: bool = False,  # usually False for bulk queries
+    ) -> list[WebElement]:
+        """
+        Return *every* element that matches *locator* (ID or XPath).
+
+        Examples
+        --------
+        rows = wa.get_all_elements("//table[@id='tbl']/tbody/tr")
+        links = wa.get_all_elements("//*[@href]", name="All links")
+        """
+        log = name or locator
+        self.logger.debug(f'Fetching all elements matching "{log}"')
+
+        by = getattr(By, self._get_find_method(locator))
+
+        # Wait until at least one element appears (or timeout)
+        try:
+            WebDriverWait(self.driver, max_wait_time).until(
+                EC.presence_of_element_located((by, locator))
+            )
+        except TimeoutException:
+            self.logger.debug(f'No matches found for "{log}"')
+            return []
+
+        # If the caller asked for clickables, filter after retrieval
+        elements = self.driver.find_elements(by, locator)
+        if is_clickable:
+            elements = [el for el in elements if el.is_enabled() and el.is_displayed()]
+
+        self.logger.debug(f'Found {len(elements)} matches for "{log}"')
+        return elements
+
+    def get_elements_count(
+            self,
+            locator: str,
+            max_wait_time: int = DEFAULT_WAIT_TIME,
+            *,
+            name: str | None = None,
+            is_clickable: bool = False,
+    ) -> int:
+        """
+        Shortcut that returns just the *count* of elements matching *locator*.
+
+        Internally calls `get_all_elements()` to keep the logic in one place.
+        """
+        return len(
+            self.get_all_elements(
+                locator,
+                max_wait_time=max_wait_time,
+                name=name,
+                is_clickable=is_clickable,
+            )
+        )
+
     def count_elements(
             self,
             locator: str,
@@ -1679,10 +1738,10 @@ class WebActions:
         self.driver.switch_to.alert.dismiss()
 
     def scroll_to_element(
-        self,
-        element,
-        max_wait_time=DEFAULT_WAIT_TIME,
-        name: Optional[str] = None,
+            self,
+            element,
+            max_wait_time=DEFAULT_WAIT_TIME,
+            name: Optional[str] = None,
     ) -> None:
         """
         Scrolls to the specified element on the page.
@@ -1888,19 +1947,19 @@ class WebActions:
             self.driver = None
 
     def _get_web_driver(
-        self,
-        *,
-        chrome_path,
-        chrome_driver_path,
-        firefox_path,
-        firefox_driver_path,
-        edge_path,
-        edge_driver_path,
-        download_path,
-        proxy_address,
-        proxy_port,
-        arguments,
-        experimental_options,
+            self,
+            *,
+            chrome_path,
+            chrome_driver_path,
+            firefox_path,
+            firefox_driver_path,
+            edge_path,
+            edge_driver_path,
+            download_path,
+            proxy_address,
+            proxy_port,
+            arguments,
+            experimental_options,
     ):
         """Return a ready WebDriver object for the selected browser."""
         self._validate_download_path(download_path)
@@ -1973,13 +2032,13 @@ class WebActions:
     # ———————————————————————————————————————————————
     @staticmethod
     def _get_chrome_options(
-        *,
-        binary_path: str | None,
-        download_path: str,
-        proxy_address: str | None,
-        proxy_port: str | None,
-        arguments: list[str] | None,
-        experimental_options: dict | None,
+            *,
+            binary_path: str | None,
+            download_path: str,
+            proxy_address: str | None,
+            proxy_port: str | None,
+            arguments: list[str] | None,
+            experimental_options: dict | None,
     ) -> webdriver.ChromeOptions:
         """Return fully-configured ChromeOptions object."""
         options = webdriver.ChromeOptions()
@@ -2018,11 +2077,11 @@ class WebActions:
     # ———————————————————————————————————————————————
     @staticmethod
     def _get_firefox_options(
-        binary_path: Optional[str],
-        download_path: str,
-        proxy_address: Optional[str],
-        proxy_port: Optional[int],
-        arguments: Optional[List[str]],
+            binary_path: Optional[str],
+            download_path: str,
+            proxy_address: Optional[str],
+            proxy_port: Optional[int],
+            arguments: Optional[List[str]],
     ) -> FirefoxOptions:
         """
         Return configured FirefoxOptions so that:
@@ -2075,13 +2134,13 @@ class WebActions:
     # ———————————————————————————————————————————————
     @staticmethod
     def _get_edge_options(
-        *,
-        binary_path: str | None,
-        download_path: str,
-        proxy_address: str | None,
-        proxy_port: str | None,
-        arguments: list[str] | None,
-        experimental_options: dict | None,
+            *,
+            binary_path: str | None,
+            download_path: str,
+            proxy_address: str | None,
+            proxy_port: str | None,
+            arguments: list[str] | None,
+            experimental_options: dict | None,
     ) -> webdriver.EdgeOptions:
         """Return EdgeOptions with download/support flags."""
         options = webdriver.EdgeOptions()
